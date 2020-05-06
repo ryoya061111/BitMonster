@@ -4,10 +4,24 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var helmet = require('helmet');
+var session = require('express-session');
+//var passport = require('passport');
 
-var indexRouter = require('./routes/index');
 
 var app = express();
+
+var indexRouter = require('./routes/index');
+var loginRouter = require('./routes/login');
+var register = require('./routes/register');
+
+
+
+// モデルの読み込み
+var User = require('./models/user');
+User.sync().then(() => {
+//  User.belongsTo(User);
+  User.sync();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -18,9 +32,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
 app.use(helmet());
 
 app.use('/', indexRouter);
+app.use('/login', loginRouter);
+app.use('/register', register)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

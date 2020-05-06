@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    .wrapper
+        p.main-title
+        form.board-form(action="/register" method="post")
+            span.label ユーザー名
+            input.input(type="text" name="user_name" required="")
+            br
+            br
+            span.label Eメール
+            input.input(type="email" name="email" required="")
+            br
+            br
+            span.label パスワード
+            input.input(type="password" name="password" required="")
+            br
+            br
+            button.submit(type="submit") 新規会員登録
